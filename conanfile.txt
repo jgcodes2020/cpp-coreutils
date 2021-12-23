@@ -1,4 +1,5 @@
 [requires]
-tclap/1.2.4
+cxxopts/3.0.0
+fmt/8.0.1
 [generators]
 cmake
