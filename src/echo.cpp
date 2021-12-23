@@ -36,10 +36,6 @@ Supported escape sequences are:
 NOTE: Some shells have echo as a builtin command, which will likely override 
 this one. Please check your shell's manual for information on its version. If 
 you would like to ensure you're using this one, wrap it in a call to env like so:
-
-env echo [...]
-
-echo v0.0.1, cxx-coreutils
 )msg"sv.substr(1);
 }
 
