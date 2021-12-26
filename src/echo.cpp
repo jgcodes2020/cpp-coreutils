@@ -174,15 +174,15 @@ std::string process_escapes(const std::string& in) {
   return out;
 }
 
-int main(int argc, char* c_argv[]) {
+int main(int argc, char* argv[]) {
   if (argc == 1) {
     std::cout << "\n";
     return 0;
   }
-  args_t argv(c_argv, c_argv + argc);
+  args_t args(argv, argv + argc);
   
   // check for help option
-  if (argv[1] == "--help") {
+  if (args[1] == "--help") {
     usage();
     return 0;
   }
@@ -194,7 +194,7 @@ int main(int argc, char* c_argv[]) {
     bool escapes;
   } opts {false, false};
   std::string out;
-  for (auto i = ++argv.begin(); i != argv.end(); ++i) {
+  for (auto i = ++args.begin(); i != args.end(); ++i) {
     if (allow_opts) {
       if ((*i)[0] == '-') {
         auto j = i->begin(); ++j;

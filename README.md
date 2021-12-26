@@ -16,3 +16,6 @@ As of today, there is definitely enough software to outright replace any trace o
 | coreutils      | busybox             |
 
 The thing is, I read somewhere that although busybox packs everything together, it doesn't support as many extensions to POSIX syntax. So I wanted to reimplement the coreutils. I know it runs on C++, but as long as there's some kind of C++ standard library installed, it should work.
+
+## Cross-platformness
+Ideally, you could, but since I'm going for POSIX, some commands by nature are not portable. In addition, I do not have a Mac to test on.
