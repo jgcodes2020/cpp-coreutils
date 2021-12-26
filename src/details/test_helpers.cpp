@@ -84,6 +84,7 @@ namespace coreutils::test {
       {"-n"s, opcode::str_not_empty},
       {"-p"s, opcode::file_fifo},
       {"-r"s, opcode::file_readable},
+      {"-t"s, opcode::fd_open},
       {"-u"s, opcode::file_set_user_id},
       {"-w"s, opcode::file_writable},
       {"-x"s, opcode::file_executable},
