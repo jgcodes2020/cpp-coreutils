@@ -157,7 +157,7 @@ namespace coreutils::test {
         opcode::fd_open,
         [](const std::string& str) -> bool {
           auto fd = parse_int(str);
-          return fcntl(fd, F_GETFD) != -1;
+          return isatty(fd);
         },
       },
       {
