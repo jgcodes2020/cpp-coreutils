@@ -45,51 +45,50 @@ void usage() {
 Usage: test <predicate>
    OR: [ <predicate> ]
    OR: [ --help
-Evaluates a predicate.
+Evaluates an expression.
 
-Predicates may be combined using the following operators:
-! [P1]          Inverts the result of P1.
-( [P1] )        Groups the expression inside the parentheses.
-[P1] -a [P2]    Takes the logical AND of both conditions.
-[P1] -o [P2]    Takes the logical OR of both conditions.
-
-Base predicates
+Base predicates (POSIX)
 ===================
 
-Files:
--b [FILE]         true if FILE exists and is a block special device
--c [FILE]         true if FILE exists and is a character special device
--d [FILE]         true if FILE exists and is a directory
--e [FILE]         true if FILE exists
--f [FILE]         true if FILE exists and is a regular file
--h [FILE]         true if FILE exists and is a symbolic link
--L [FILE]         same as -h
--p [FILE]         true if FILE exists and is a FIFO (named pipe)
+! [EXPR]            true if EXPR is false
+( [EXPR] )          true if EXPR is true
+[EXPR1] -a [EXPR2]  true if EXPR1 and EXPR2 are both true
+[EXPR1] -o [EXPR2]  true if at least one of EXPR1 and EXPR2 is true
+
+File types:
+-b [FILE]           true if FILE exists and is a block special device
+-c [FILE]           true if FILE exists and is a character special device
+-d [FILE]           true if FILE exists and is a directory
+-e [FILE]           true if FILE exists
+-f [FILE]           true if FILE exists and is a regular file
+-h [FILE]           true if FILE exists and is a symbolic link
+-L [FILE]           same as -h
+-p [FILE]           true if FILE exists and is a FIFO (named pipe)
 
 File permissions:
--r [FILE]         true if FILE can be read from
--w [FILE]         true if FILE can be written to
--x [FILE]         true if FILE can be executed as a program
--g [FILE]         true if FILE exists and uses set group ID (GID)
--u [FILE]         true if FILE exists and uses set user ID (UID)
+-r [FILE]           true if FILE can be read from
+-w [FILE]           true if FILE can be written to
+-x [FILE]           true if FILE can be executed as a program
+-g [FILE]           true if FILE exists and uses set group ID (GID)
+-u [FILE]           true if FILE exists and uses set user ID (UID)
 
 File descriptors:
--t [FD]           true if FD is open and points to a terminal (isatty)
+-t [FD]             true if FD is open and points to a terminal (isatty)
 
 Strings:
--n [STR]          true if STR is not the empty string
--z [STR]          true if STR is the empty string
-[STR]             same as -n. Prefer to use -n [STR] to avoid triggering --help.
-[STR1] = [STR2]   true if STR1 and STR2 are equal
-[STR1] != [STR2]  true if STR1 and STR2 are not equal
+-n [STR]            true if STR is not the empty string
+-z [STR]            true if STR is the empty string
+[STR]               same as -n. Prefer to use -n [STR] to avoid triggering --help.
+[STR1] = [STR2]     true if STR1 and STR2 are equal
+[STR1] != [STR2]    true if STR1 and STR2 are not equal
 
 Integers:
-[N1] -eq [N2]     true if N1 and N2 are equal
-[N1] -ne [N2]     true if N1 and N2 are not equal
-[N1] -gt [N2]     true if N1 is greater than N2
-[N1] -ge [N2]     true if N1 is greater than or equal to N2
-[N1] -lt [N2]     true if N1 is less than N2
-[N1] -le [N2]     true if N1 is less than or equal to N2
+[N1] -eq [N2]       true if N1 and N2 are equal
+[N1] -ne [N2]       true if N1 and N2 are not equal
+[N1] -gt [N2]       true if N1 is greater than N2
+[N1] -ge [N2]       true if N1 is greater than or equal to N2
+[N1] -lt [N2]       true if N1 is less than N2
+[N1] -le [N2]       true if N1 is less than or equal to N2
 
 Return value
 ============
@@ -98,10 +97,14 @@ Return value
 2 if there was a syntax error.
 3 otherwise.
 
-NOTE 1: all integer comparisons are done using {1}signed long{0}. Trying to use an
+NOTE 1: Some shells have test and [ as a builtin command, which will likely
+override this one. Please check your shell's manual for information on its 
+version.
+NOTE 2: all integer comparisons are done using signed long. Trying to use an
 integer that is too big will result in an error.
-NOTE 2: Some shells have {1}test{0} and {1}[{0} as a builtin command, which will likely override 
-this one. Please check your shell's manual for information on its version.
+NOTE 3: Using -a and -o to combine conditions is inherently ambiguous and tends
+to be hard to parse. Use 'test EXPR1 && test EXPR2' or 'test EXPR1 || test EXPR2'
+instead.
 )msg"sv.substr(1), "\e[0m"sv, "\e[1m"sv);
 }
 

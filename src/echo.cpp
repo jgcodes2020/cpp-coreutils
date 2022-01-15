@@ -3,12 +3,14 @@
 #include <string_view>
 #include <vector>
 
+#include <fmt/core.h>
+
 using namespace std::literals::string_view_literals;
 
 using args_t = std::vector<std::string_view>;
 
-void usage() {
-  std::cout << R"msg(
+void usage(std::string_view argv0) {
+  std::cout << fmt::format(R"msg(
 usage: {0} [-ne]... [MESSAGE]...
    or: {0} [--help]
 Prints the MESSAGEs to standard output.
@@ -34,9 +36,8 @@ Supported escape sequences are:
   \xNN      hexadecimal escape for value NN (1-2 digits)
 
 NOTE: Some shells have echo as a builtin command, which will likely override 
-this one. Please check your shell's manual for information on its version. If 
-you would like to ensure you're using this one, wrap it in a call to env like so:
-)msg"sv.substr(1);
+this one. Please check your shell's manual for information on its version.
+)msg"sv.substr(1), argv0);
 }
 
 [[gnu::always_inline]] inline bool is_octal_digit(char c) {
@@ -44,7 +45,7 @@ you would like to ensure you're using this one, wrap it in a call to env like so
 }
 
 [[gnu::always_inline]] inline bool is_hex_digit(char c) {
-  return (c >= '0' & c <= '9') | (c >= 'A' && c <= 'F') | (c >= 'a' && c <= 'f');
+  return (c >= '0' && c <= '9') | (c >= 'A' && c <= 'F') | (c >= 'a' && c <= 'f');
 }
 
 [[gnu::always_inline]] inline char extract_hex_digit(char c) {
@@ -183,7 +184,7 @@ int main(int argc, char* argv[]) {
   
   // check for help option
   if (args[1] == "--help") {
-    usage();
+    usage(args[0]);
     return 0;
   }
   
