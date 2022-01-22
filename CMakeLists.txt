@@ -10,6 +10,7 @@ conan_cmake_install(
   PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}
   BUILD missing
   SETTINGS ${conan_settings}
+  SETTINGS "compiler.cppstd=20"
   INSTALL_FOLDER ${CMAKE_BINARY_DIR}/CMakeFiles/conan_deps
 )
 
@@ -17,7 +18,7 @@ conan_cmake_install(
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR}/CMakeFiles/conan_deps)
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/CMakeFiles/conan_deps)
 
-foreach(pkg cxxopts fmt Microsoft.GSL)
+foreach(pkg cxxopts fmt Microsoft.GSL mtap)
   find_package(${pkg} REQUIRED)
 endforeach()
 
@@ -62,7 +63,7 @@ target_link_libraries(test_lbracket PUBLIC fmt::fmt)
 coreutils_setup_target(test_lbracket)
 
 add_executable(ls src/ls.cpp)
-target_link_libraries(ls PUBLIC cxxopts::cxxopts)
+target_link_libraries(ls PUBLIC mtap::mtap)
 coreutils_setup_target(ls)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS yes)
